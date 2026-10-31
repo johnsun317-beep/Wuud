@@ -1,0 +1,298 @@
+<!-- ========================================== -->
+<!-- SYSTEME.IO COMPATIBLE - CARTER EFE GHANA   -->
+<!-- ========================================== -->
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap");
+  
+  #carter-efe-app {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #ebedf0;
+    max-width: 500px;
+    margin: 0 auto;
+    color: #333;
+    position: relative;
+    box-sizing: border-box;
+  }
+  #carter-efe-app * { box-sizing: border-box; margin: 0; padding: 0; }
+  #carter-efe-app .post { background: #fff; margin: 0 auto; padding: 15px; border: 1px solid #d0d1d5; border-radius: 6px; text-align: center; }
+  #carter-efe-app .welcome { font-size: 15px; line-height: 1.5; margin-bottom: 15px; }
+  #carter-efe-app .amount { color: #CE1126; font-weight: bold; } /* Ghana Red */
+  #carter-efe-app button { display: block; width: 100%; max-width: 280px; height: 50px; color: #FFF; border: none; outline: none; font-size: 18px; cursor: pointer; border-radius: 5px; margin: 15px auto; background: #006B3F; font-weight: bold; box-shadow: 0 4px 10px rgba(0,107,63,0.3); transition: 0.3s; } /* Ghana Green */
+  #carter-efe-app button:hover { background: #004d2c; }
+  #carter-efe-app input { width: 100%; max-width: 330px; height: 50px; padding: 10px; border: 2px solid #cecece; font-size: 16px; border-radius: 5px; margin-bottom: 15px; outline: none; text-align: center; }
+  
+  #carter-efe-app #loader, #carter-efe-app #info, #carter-efe-app #checking, #carter-efe-app #share, #carter-efe-app #claim { display: none; }
+  
+  #carter-efe-app .spin { width: 50px; height: 50px; border: solid 6px #e1e2e3; border-top-color: #006B3F; border-radius: 50%; margin: 15px auto; animation: spin 0.8s linear infinite; }
+  @keyframes spin { 100% { transform: rotate(1turn); } }
+  
+  #carter-efe-app .barr { display: flex; align-items: center; max-width: 400px; margin: 15px auto; }
+  #carter-efe-app .fill { flex: 1; height: 25px; border: 2px solid #006B3F; background-color: #f0f0f0; padding: 2px; border-radius: 4px; margin-right: 8px; }
+  #carter-efe-app #fill, #carter-efe-app #fill2 { background: #006B3F; width: 0%; height: 100%; transition: width 0.2s linear; }
+  #carter-efe-app .percentage { width: 50px; text-align: right; font-weight: bold; font-size: 15px; color: #006B3F; }
+  
+  #carter-efe-app .telbtn { background: #006B3F; display: flex; justify-content: center; align-items: center; text-decoration: none; height: 55px; border-radius: 6px; margin-bottom: 12px; cursor: pointer; border: 2px solid #FCD116; transition: 0.3s; } /* Ghana Gold border */
+  #carter-efe-app .telbtn:hover { background: #004d2c; }
+  #carter-efe-app .telbtn span { color: #fff; font-size: 18px; font-weight: 700; }
+  
+  #carter-efe-app .share-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; max-width: 280px; height: 50px; margin: 10px auto; border-radius: 5px; color: white !important; font-size: 16px; font-weight: 700; background-color: #25D366; border: none; cursor: pointer; }
+
+  /* Testimonial Popups */
+  #carter-efe-app .popup { position: fixed; top: -100px; left: 50%; width: 90%; max-width: 400px; background-color: #006B3F; color: #FFF; padding: 15px; font-weight: 600; border-radius: 8px; opacity: 0; visibility: hidden; transform: translateX(-50%); text-align: center; z-index: 99999; border: 2px solid #FCD116; transition: all 0.5s ease; font-size: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+  #carter-efe-app .popup.show { top: 10px; opacity: 1; visibility: visible; }
+
+  /* Facebook Comments Box */
+  #carter-efe-app .comments { text-align: left; margin-top: 25px; border-top: 1px solid #e1e2e3; padding-top: 15px; font-size: 14px; background: #fff; }
+  #carter-efe-app .comments-header { display: flex; justify-content: space-between; color: #606770; font-size: 13px; padding-bottom: 10px; border-bottom: 1px solid #e1e2e3; margin-bottom: 15px; }
+  #carter-efe-app .comment-row { display: flex; gap: 10px; margin-bottom: 15px; }
+  #carter-efe-app .comment-avatar { width: 36px; height: 36px; border-radius: 50%; background: #006B3F; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; flex-shrink: 0; }
+  #carter-efe-app .comment-bubble { background: #f0f2f5; padding: 10px 12px; border-radius: 15px; width: 100%; }
+  #carter-efe-app .comment-name { font-weight: 600; color: #1c1e21; display: block; margin-bottom: 2px; font-size: 13px; }
+  #carter-efe-app .comment-text { color: #1c1e21; font-size: 14px; line-height: 1.4; }
+</style>
+
+<div id="carter-efe-app">
+  
+  <!-- POPUP NOTIFICATIONS -->
+  <div id="popup1" class="popup">💰 Kwame from Accra just received GHS 300!</div>
+  <div id="popup2" class="popup">💰 Ama from Kumasi just received GHS 300!</div>
+  <div id="popup3" class="popup">💰 Kofi from Takoradi just received GHS 300!</div>
+  <div id="popup4" class="popup">💰 Akosua from Tema just received GHS 300!</div>
+  <div id="popup5" class="popup">💰 Yaw from Cape Coast just received GHS 300!</div>
+
+  <!-- HEADER IMAGE -->
+  <center>
+    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop" alt="Carter Efe Ghana Visit" style="width: 100%; display: block; border-radius: 6px 6px 0 0;">
+  </center>
+
+  <!-- TOP COUNTER -->
+  <div style="background: #006B3F; color: #fff; text-align: center; padding: 12px; font-weight: 600; font-size: 14px;">
+    LIVE FROM ACCRA <br>
+    <span style="font-size: 24px; color: #FCD116; font-weight: bold;" id="countdowntimer">3,412</span><br>
+    Ghanaians have received their GHS 300
+  </div>
+
+  <div class="post">
+    <h2 style="font-size: 18px; color: #CE1126; margin-bottom: 10px; font-weight: 700;">Carter Efe is in Ghana! 🇬🇭</h2>
+    <h3 style="font-size: 16px; color: #333; margin-bottom: 15px;">GHS 300 Cash Giveaway for All Fans</h3>
+
+    <div id="intro">
+      <p class="welcome">
+        To celebrate his first major visit to Ghana, Carter Efe is giving out <span class="amount">GHS 300</span> to all his loyal fans. 
+        <br><br>
+        Tap the button below to complete the 30-second registration and claim your cash reward instantly.
+      </p>
+      <button id="go">CLAIM GHS 300</button>
+    </div>
+
+    <div id="loader">
+      <div style="font-weight: 600; color: #006B3F;">Please Wait ...</div>
+      <div class="spin"></div>
+      <div id="num" style="font-weight: bold; font-size: 20px; color: #006B3F;">0%</div>
+    </div>
+
+    <div id="info">
+      <p style="font-weight: 600; margin-bottom: 15px; color: #006B3F;">ENTER YOUR NAME / MOMO NUMBER:</p>
+      <input type="text" placeholder="Full Name or MoMo Number" id="name">
+      <button id="confirm">Submit</button>
+      <p class="error" style="display: none; color: red; font-size: 14px; margin-top: 10px;">Please enter a valid name or number</p>
+    </div>
+
+    <div id="checking">
+      <p style="font-weight: 600; margin-bottom: 15px; color: #006B3F;">Verifying your details...</p>
+      <div class="barr">
+        <div class="fill"><div id="fill"></div></div>
+        <div class="percentage"><span id="percentage">0%</span></div>
+      </div>
+    </div>
+
+    <div id="share">
+      <p style="font-weight: 600; margin-bottom: 5px; color: #006B3F;">Your entry is ready!</p>
+      <p style="font-size: 14px; margin-bottom: 20px;">Ending in 24 hours</p>
+      
+      <p style="text-align: left; margin-bottom: 15px; font-size: 14px; font-weight: 600;">Share this page to 5 WhatsApp groups to verify you are a real fan and unlock your payment.</p>
+      
+      <button id="whatsapp-btn" class="share-btn">
+        <svg width="22" height="22" viewBox="0 0 32 32" style="fill: currentColor;"><path d="M16.01 3C8.84 3 3 8.84 3 16.01c0 2.29.6 4.53 1.74 6.5L3 29l6.66-1.69A12.94 12.94 0 0 0 16.01 29C23.18 29 29 23.17 29 16.01S23.18 3 16.01 3Zm0 23.7c-2.02 0-3.99-.54-5.72-1.56l-.41-.24-3.95 1 1.05-3.85-.27-.43a10.58 10.58 0 0 1-1.61-5.61c0-6.01 4.9-10.9 10.91-10.9 2.91 0 5.65 1.13 7.7 3.19a10.8 10.8 0 0 1 3.19 7.71c0 6.01-4.89 10.89-10.89 10.89Zm5.98-8.15c-.33-.16-1.94-.96-2.24-1.07-.3-.11-.52-.16-.74.16-.22.33-.85 1.07-1.04 1.29-.19.22-.38.25-.71.08-.33-.16-1.39-.51-2.65-1.63-.98-.87-1.64-1.95-1.83-2.28-.19-.33-.02-.51.14-.67.14-.14.33-.38.49-.57.16-.19.22-.33.33-.55.11-.22.05-.41-.03-.57-.08-.16-.74-1.78-1.02-2.44-.27-.64-.54-.55-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.33-1.14 1.12-1.14 2.73s1.17 3.16 1.33 3.38c.16.22 2.3 3.51 5.58 4.92.78.34 1.39.54 1.86.69.78.25 1.49.21 2.05.13.63-.09 1.94-.79 2.21-1.55.27-.76.27-1.42.19-1.55-.08-.14-.3-.22-.63-.38Z"/></svg>
+        Share on WhatsApp
+      </button>
+
+      <div class="barr">
+        <div class="fill"><div id="fill2"></div></div>
+        <div class="percentage"><span id="percentage2">0%</span></div>
+      </div>
+    </div>
+
+    <div id="claim">
+      <p style="font-size: 40px; color: #27ae60; margin-bottom: 10px;">✅</p>
+      <p style="font-weight: 600; margin-bottom: 20px; color: #006B3F;">Verification Successful! Click below to claim your GHS 300.</p>
+      
+      <!-- SYSTEME.IO SAFE LINKS - Replace href with your offer link -->
+      <a href="https://YOUR-DESTINATION-LINK-HERE.com" target="_blank" rel="noopener noreferrer" class="telbtn">
+        <span>CLAIM GHS 300 NOW</span>
+      </a>
+      <a href="https://YOUR-DESTINATION-LINK-HERE.com" target="_blank" rel="noopener noreferrer" class="telbtn" style="background: #FCD116; color: #006B3F; border: 2px solid #006B3F;">
+        <span style="color: #006B3F;">CHECK PAYMENT STATUS</span>
+      </a>
+    </div>
+
+    <!-- FACEBOOK STYLE COMMENTS -->
+    <div class="comments">
+      <div class="comments-header">
+        <span><b>2,104</b> likes</span>
+        <span><b>890</b> comments · <b>342</b> shares</span>
+      </div>
+
+      <div class="comment-row">
+        <div class="comment-avatar">K</div>
+        <div class="comment-bubble">
+          <span class="comment-name">Kwame Mensah</span>
+          <span class="comment-text">Chale I just received my GHS 300. Carter Efe is a real one for this! 🇬🇭🔥</span>
+        </div>
+      </div>
+
+      <div class="comment-row">
+        <div class="comment-avatar" style="background: #e4e6eb; color: #606770;">A</div>
+        <div class="comment-bubble">
+          <span class="comment-name">Ama Serwaa</span>
+          <span class="comment-text">I thought it was a joke ooo, but I got my MoMo alert just now! Thank you!</span>
+        </div>
+      </div>
+
+      <div class="comment-row">
+        <div class="comment-avatar" style="background: #CE1126;">K</div>
+        <div class="comment-bubble">
+          <span class="comment-name">Kofi Boateng</span>
+          <span class="comment-text">God bless you for remembering Ghana. I just got mine.</span>
+        </div>
+      </div>
+
+      <div class="comment-row">
+        <div class="comment-avatar" style="background: #FCD116; color: #333;">A</div>
+        <div class="comment-bubble">
+          <span class="comment-name">Akosua Asante</span>
+          <span class="comment-text">I had to share to my family group to unlock it, but it's real! I got the GHS 300.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- VANILLA JAVASCRIPT LOGIC                   -->
+<!-- ========================================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Elements
+  var btnGo = document.getElementById('go');
+  var btnConfirm = document.getElementById('confirm');
+  var btnWhatsapp = document.getElementById('whatsapp-btn');
+  
+  var divIntro = document.getElementById('intro');
+  var divLoader = document.getElementById('loader');
+  var divInfo = document.getElementById('info');
+  var divChecking = document.getElementById('checking');
+  var divShare = document.getElementById('share');
+  var divClaim = document.getElementById('claim');
+
+  // STEP 1: Intro to Loader
+  btnGo.addEventListener('click', function() {
+    divIntro.style.display = 'none';
+    divLoader.style.display = 'block';
+    var i = 0;
+    var interval = setInterval(function() {
+      document.getElementById('num').innerText = i + "%";
+      i++;
+      if (i > 100) {
+        clearInterval(interval);
+        divLoader.style.display = 'none';
+        divInfo.style.display = 'block';
+      }
+    }, 30);
+  });
+
+  // STEP 2: Form to Checking
+  btnConfirm.addEventListener('click', function() {
+    var name = document.getElementById('name').value.trim();
+    if (name.length < 3) {
+      document.querySelector('.error').style.display = 'block';
+      return;
+    }
+    document.querySelector('.error').style.display = 'none';
+    
+    divInfo.style.display = 'none';
+    divChecking.style.display = 'block';
+
+    var i = 0;
+    var interval = setInterval(function() {
+      i += 2;
+      document.getElementById('percentage').innerText = i + "%";
+      document.getElementById('fill').style.width = i + "%";
+      
+      if (i >= 100) {
+        clearInterval(interval);
+        setTimeout(function() {
+          divChecking.style.display = 'none';
+          divShare.style.display = 'block';
+        }, 400);
+      }
+    }, 40);
+  });
+
+  // STEP 3: WhatsApp Share Logic
+  var shareProgress = 0;
+  var shareText = "*🇬🇭 Carter Efe is in Ghana! GHS 300 Cash Giveaway!* %0A%0A To celebrate his visit, he is giving out GHS 300 to all his fans!%0A%0A_Click here to claim_ 👇%0A" + window.location.href + "%0A%0A*Share this with your friends!*";
+
+  btnWhatsapp.addEventListener('click', function() {
+    // Open WhatsApp
+    window.open("https://wa.me/?text=" + shareText, "_blank");
+
+    // Progress Bar Logic
+    if (shareProgress === 0) { shareProgress += 50; }
+    else if (shareProgress === 50) { alert("Please share to a different group to fully verify."); shareProgress += 15; }
+    else if (shareProgress === 65) { shareProgress += 15; }
+    else if (shareProgress === 80) { shareProgress += 10; }
+    else if (shareProgress === 90) { shareProgress += 5; }
+    else { shareProgress = 100; }
+
+    setTimeout(function() {
+      document.getElementById('fill2').style.width = shareProgress + "%";
+      document.getElementById('percentage2').innerText = shareProgress + "%";
+
+      if (shareProgress >= 100) {
+        divShare.style.display = 'none';
+        divClaim.style.display = 'block';
+      }
+    }, 1200);
+  });
+
+  // POPUP TESTIMONIES LOGIC
+  var popups = [
+    { id: 'popup1', delay: 3000 }, { id: 'popup2', delay: 9000 },
+    { id: 'popup3', delay: 16000 }, { id: 'popup4', delay: 24000 },
+    { id: 'popup5', delay: 32000 }
+  ];
+
+  popups.forEach(function(popup) {
+    setTimeout(function() {
+      var el = document.getElementById(popup.id);
+      if(el) {
+        el.classList.add('show');
+        setTimeout(function() {
+          el.classList.remove('show');
+        }, 4000);
+      }
+    }, popup.delay);
+  });
+
+  // Live Counter Increase
+  var timeleft = 3412;
+  setInterval(function(){
+    timeleft += Math.floor(Math.random() * 5) + 1;
+    var timer = document.getElementById('countdowntimer');
+    if(timer) timer.innerText = timeleft.toLocaleString();
+  }, 4000);
+
+});
+</script>
